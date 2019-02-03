@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   title = 'socket-app';
   action = Action;
   user: User;
+  room = 'default';
   messages: Message[] = [];
   messageContent: string;
   ioConnection: any;
@@ -75,6 +76,14 @@ export class AppComponent implements OnInit {
     }
 
     this.socketService.send(message);
+  }
+
+  public switchRoom(name) {
+    this.socketService.switchRoom(name);
+  }
+
+  public onReload() {
+    this.socketService.emitReload();
   }
 
 }
