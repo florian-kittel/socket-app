@@ -4,24 +4,16 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm run start:server` for a api. 
 
-## Code scaffolding
+## What it does
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+At startup, the Client will established a websocket connection to the api under `localhost:4001/api/mysocket`. The Angular app uses
+`localhost:4200/api/mysocket` by its local proxy settings.
 
-## Build
+To test the application, open it in a different browser or via local ip in a diffrent divice in your current network. Then type in
+a message. This message should be instant visible in on all clients. To change a room, enter a new room name at the fist input
+field and hit enter. Then type in a message. Only clients that are also participant of this room, will get the messages.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Same works with the reload button. It will reload all other clients and not the sender.
