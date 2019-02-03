@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
+    "start": "ng serve --host 0.0.0.0 --proxy-config proxy.conf.json",
     "start:server": "nodemon ./server/index.js",
     "build": "ng build",
     "test": "ng test",
