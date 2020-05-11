@@ -18,6 +18,8 @@ const io = socketIO(server, {
 io.on('connection', socket => {
   console.log('Connected client on port %s with ID %s', port, socket.id);
 
+  socket.send(socket.id);
+
   socket.on('message', (m) => {
     // console.log('[server][%s](message): %s', socket.id, JSON.stringify(m));
     io.in(m.room || 'default').emit('message', m);

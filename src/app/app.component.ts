@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   messages: Message[] = [];
   messageContent: string;
   ioConnection: any;
+  id = '';
 
   ngOnInit(): void {
     this.initIoConnection();
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit {
     this.socketService.onEvent(Event.CONNECT)
       .subscribe(() => {
         console.log('connected');
+        this.id = this.socketService.id;
       });
 
     this.socketService.onEvent(Event.DISCONNECT)

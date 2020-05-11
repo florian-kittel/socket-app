@@ -15,10 +15,15 @@ export class SocketService {
   public name: string;
   public room = 'default';
   public rooms = [];
+  public id = '';
 
   public initSocket(): void {
     this.socket = socketIo(SERVER_URL, { path: '/api/mysocket' });
     this.switchRoom('default');
+
+    this.socket.on('connect', () => {
+      this.id = this.socket.id;
+    });
   }
 
   public send(message: Message): void {
