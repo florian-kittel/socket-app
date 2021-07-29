@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Message } from './models';
 import { Event } from './models';
 
-import * as socketIo from 'socket.io-client';
+import { io } from 'socket.io-client';
+
 
 // Defined Server URL (localhost:4200)
 const SERVER_URL = `${window.location.protocol}//${window.location.host}`;
@@ -18,7 +19,7 @@ export class SocketService {
   public id = '';
 
   public initSocket(): void {
-    this.socket = socketIo(SERVER_URL, { path: '/api/mysocket' });
+    this.socket = io(SERVER_URL, { path: '/api/mysocket' });
     this.switchRoom('default');
 
     this.socket.on('connect', () => {
@@ -35,7 +36,7 @@ export class SocketService {
       this.socket.on('message', (data: Message) => observer.next(data));
 
       this.socket.on('reload', () => {
-        window.location.reload(true);
+        window.location.reload();
       });
 
     });
