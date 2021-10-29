@@ -6,6 +6,11 @@ import { Event } from './models';
 import { Message } from './models';
 import { User } from './models';
 
+
+import { DomSanitizer } from '@angular/platform-browser';
+
+import Identicon from 'identicon.js';
+// let Identicon: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,18 +26,22 @@ export class AppComponent implements OnInit {
   ioConnection: any;
   id = '';
 
+  avatars = {};
+
   ngOnInit(): void {
     this.initIoConnection();
   }
-  constructor(private socketService: SocketService) {
-  }
+
+  constructor(private socketService: SocketService, private sanitizer: DomSanitizer) { }
 
   private initIoConnection(): void {
     this.socketService.initSocket();
 
     this.ioConnection = this.socketService.onMessage()
       .subscribe((message: Message) => {
-        this.messages.push(message);
+        if (message && message.content) {
+          this.messages.push(message);
+        }
       });
 
     this.socketService.onEvent(Event.CONNECT)
@@ -86,6 +95,28 @@ export class AppComponent implements OnInit {
 
   public onReload() {
     this.socketService.emitReload();
+  }
+
+  getAvatar(data: string) {
+    if (!data) {
+      return '';
+    }
+
+    if (!this.avatars[data]) {
+      const options = {
+        foreground: [255, 255, 255, 255],
+        background: [0, 0, 0, 255],
+        margin: 0.2,
+        size: 24,
+        format: 'png'
+      };
+
+      const format = 'png';
+      const svg = new Identicon(data + (Date.now()), options).toString();
+      this.avatars[data] = `data:image/${format};base64,${svg}`;
+    }
+
+    return this.sanitizer.bypassSecurityTrustUrl(this.avatars[data]);
   }
 
 }

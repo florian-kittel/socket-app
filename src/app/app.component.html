@@ -1,26 +1,43 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h2>
-    Welcome to {{ title }}!
-  </h2>
-  <img width="100" alt="Angular Logo"
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div style="padding: 2rem;">
+
+  <header>
+    <h2>
+      Angular Socket Chat
+    </h2>
+    <div>Open an <a href="/" target="_blank">new tab</a> to have another instance of the chat.</div>
+  </header>
+
+  <main>
+
+    <div style="display: flex; align-items: center; margin-top: 1rem; margin-bottom: 1rem; ">
+      <img [src]="getAvatar(id)">
+      <div style="padding-left: 1rem;">
+        {{id}}
+      </div>>
+    </div>
+
+    <div style="margin-bottom: 2rem;">
+      <input #inputRoom maxlength="140" placeholder="Type your room" [(ngModel)]="room"
+        (keyup.enter)="switchRoom(room)">
+      <input #inputMessage maxlength="140" placeholder="Type your message" [(ngModel)]="messageContent"
+        (keyup.enter)="sendMessage(messageContent)">
+      <button (click)="sendMessage(messageContent);">send</button>
+      <button (click)="onReload();">reload others</button>
+    </div>
+
+    <ng-container *ngFor="let message of messages">
+      <div style="display: flex; align-items: center ">
+        <div>
+          <img [src]="getAvatar(message.id)">
+        </div>
+        <div style="padding-left: 1rem;">
+          {{message.content}}
+        </div>
+      </div>
+      <hr>
+    </ng-container>
+
+    <router-outlet></router-outlet>
+
+  </main>
 </div>
-
-<div>
-  SocketID:
-  {{id}}
-</div>
-
-<input #inputRoom maxlength="140" placeholder="Type your room" [(ngModel)]="room" (keyup.enter)="switchRoom(room)">
-<input #inputMessage maxlength="140" placeholder="Type your message" [(ngModel)]="messageContent"
-  (keyup.enter)="sendMessage(messageContent)">
-<button (click)="onReload();">reload others</button>
-<div *ngFor="let message of messages">
-  {{message.content}}
-  <hr>
-</div>
-
-
-
-<router-outlet></router-outlet>

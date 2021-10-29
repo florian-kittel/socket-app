@@ -5,6 +5,7 @@ export interface User {
 export interface Message {
   from: User;
   content: string;
+  room?: string;
   action?: string;
 }
 

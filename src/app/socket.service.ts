@@ -19,7 +19,11 @@ export class SocketService {
   public id = '';
 
   public initSocket(): void {
-    this.socket = io(SERVER_URL, { path: '/api/mysocket' });
+    this.socket = io(SERVER_URL, {
+      path: '/api/mysocket',
+      reconnection: true
+    });
+
     this.switchRoom('default');
 
     this.socket.on('connect', () => {
@@ -28,7 +32,7 @@ export class SocketService {
   }
 
   public send(message: Message): void {
-    this.socket.emit('message', { room: this.room, ...message });
+    this.socket.emit('message', { id: this.id, room: this.room, ...message });
   }
 
   public onMessage(): Observable<Message> {
